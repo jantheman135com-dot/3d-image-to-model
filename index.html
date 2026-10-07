@@ -7,7 +7,7 @@
       name="description"
       content="Upload 2D images and transform them into interactive 3D models with drag, zoom, rotation, and floating label overlays."
     />
-    <title>DepthForge 3D Studio</title>
+    <title>DepthForge — 2D to 3D</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,106 +17,140 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="brand-mark">DF</div>
-          <div>
-            <p class="eyebrow">Creative 3D Lab</p>
-            <h1>DepthForge Studio</h1>
-          </div>
+    <div class="app">
+      <nav class="navbar">
+        <div class="logo">DF 3D Studio</div>
+
+        <div class="nav-links">
+          <span id="navGallery">Gallery</span>
+          <span id="navFeatures">Features</span>
+          <span id="navDocs">Docs</span>
         </div>
 
-        <nav class="top-actions" aria-label="Viewer actions">
-          <button class="ghost-button" type="button" id="resetViewBtn">Reset view</button>
-          <button class="primary-button" type="button" id="sampleSceneBtn">Try demo</button>
-        </nav>
-      </header>
+        <button class="launch-button" id="launchStudio">Launch App</button>
+      </nav>
 
-      <main class="workspace">
-        <aside class="sidebar panel">
-          <section class="upload-panel">
-            <div class="section-head">
-              <span class="chip chip-cyan">Upload</span>
+      <main class="hero">
+        <div class="hero-content">
+          <p class="tagline">Transform in Real-Time</p>
+          <h1>Convert <span>2D to 3D</span> Instantly</h1>
+          <p class="description">
+            Upload any image and watch it transform into an interactive 3D model.
+            Rotate 360°, drag to explore, zoom with precision. Add floating labels
+            and turn environments into immersive depth-mapped scenes.
+          </p>
+          <button class="explore-button" id="exploreCTA">Launch Studio</button>
+        </div>
+
+        <div class="orb-container" aria-hidden="true">
+          <div class="orb">
+            <div class="orb-core"></div>
+          </div>
+          <div class="orb-glow"></div>
+        </div>
+      </main>
+
+      <section id="studioContainer" class="studio-shell hidden">
+        <header class="topbar">
+          <div class="brand-wrap">
+            <div class="brand-mark">DF</div>
+            <div>
+              <p class="eyebrow">3D Studio</p>
+              <h1>DepthForge</h1>
             </div>
+          </div>
 
-            <label class="dropzone" for="mainImageInput">
-              <input id="mainImageInput" type="file" accept="image/*" hidden />
-              <span class="dropzone-icon">⇪</span>
-              <span class="dropzone-text">
-                <strong>Main image</strong>
-                <small>Drag in a photo, logo, or environment scene</small>
-              </span>
-            </label>
+          <nav class="top-actions" aria-label="Viewer actions">
+            <button class="ghost-button" type="button" id="resetViewBtn">Reset view</button>
+            <button class="nav-back-button" type="button" id="backToHome">← Back</button>
+          </nav>
+        </header>
 
-            <label class="dropzone" for="labelImageInput">
-              <input id="labelImageInput" type="file" accept="image/*" hidden />
-              <span class="dropzone-icon">✦</span>
-              <span class="dropzone-text">
-                <strong>Floating labels</strong>
-                <small>Upload APIC / callout image overlays</small>
-              </span>
-            </label>
-          </section>
+        <div class="workspace">
+          <aside class="sidebar panel">
+            <section class="upload-panel">
+              <div class="section-head">
+                <span class="chip chip-cyan">Upload</span>
+              </div>
 
-          <section class="control-panel panel-inner">
-            <div class="section-head">
-              <span class="chip chip-violet">Controls</span>
-            </div>
+              <label class="dropzone" for="mainImageInput">
+                <input id="mainImageInput" type="file" accept="image/*" hidden />
+                <span class="dropzone-icon">↪</span>
+                <span class="dropzone-text">
+                  <strong>Main image</strong>
+                  <small>Drag in a photo or scene</small>
+                </span>
+              </label>
 
-            <div class="slider-wrap">
-              <label for="depthSlider">Depth intensity</label>
-              <div class="slider-row">
-                <input id="depthSlider" type="range" min="0.5" max="3" step="0.1" value="1.5" />
-                <span id="depthValue">1.5x</span>
+              <label class="dropzone" for="labelImageInput">
+                <input id="labelImageInput" type="file" accept="image/*" hidden />
+                <span class="dropzone-icon">✨</span>
+                <span class="dropzone-text">
+                  <strong>Floating labels</strong>
+                  <small>Upload callout overlays</small>
+                </span>
+              </label>
+            </section>
+
+            <section class="control-panel panel-inner">
+              <div class="section-head">
+                <span class="chip chip-violet">Controls</span>
+              </div>
+
+              <div class="slider-wrap">
+                <label for="depthSlider">Depth intensity</label>
+                <div class="slider-row">
+                  <input id="depthSlider" type="range" min="0.5" max="3" step="0.1" value="1.5" />
+                  <span id="depthValue">1.5x</span>
+                </div>
+              </div>
+
+              <div class="toggle-row">
+                <span>Auto rotate</span>
+                <label class="switch">
+                  <input id="autoRotateToggle" type="checkbox" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+
+              <div class="toggle-row">
+                <span>Grid floor</span>
+                <label class="switch">
+                  <input id="gridToggle" type="checkbox" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+            </section>
+
+            <section class="panel-inner info-card">
+              <div class="section-head">
+                <span class="chip chip-gold">Features</span>
+              </div>
+              <ul>
+                <li>360° rotate & orbit</li>
+                <li>Drag to explore</li>
+                <li>Scroll zoom precision</li>
+                <li>Floating 3D overlays</li>
+              </ul>
+            </section>
+          </aside>
+
+          <section class="viewer-panel panel">
+            <div class="viewer-meta">
+              <div>
+                <p class="eyebrow">Scene Preview</p>
+                <h2>Interactive 3D Model</h2>
+              </div>
+              <div class="tag-row">
+                <span class="status-dot"></span>
+                <span>Live render</span>
               </div>
             </div>
 
-            <div class="toggle-row">
-              <span>Auto rotate</span>
-              <label class="switch">
-                <input id="autoRotateToggle" type="checkbox" checked />
-                <span class="slider-round"></span>
-              </label>
-            </div>
-
-            <div class="toggle-row">
-              <span>Grid floor</span>
-              <label class="switch">
-                <input id="gridToggle" type="checkbox" checked />
-                <span class="slider-round"></span>
-              </label>
-            </div>
+            <div id="viewer"></div>
           </section>
-
-          <section class="panel-inner info-card">
-            <div class="section-head">
-              <span class="chip chip-gold">Features</span>
-            </div>
-            <ul>
-              <li>360° rotate and orbit</li>
-              <li>Drag and scroll zoom</li>
-              <li>Floating UI labels as 3D images</li>
-              <li>Convert flat scenes into layered depth</li>
-            </ul>
-          </section>
-        </aside>
-
-        <section class="viewer-panel panel">
-          <div class="viewer-meta">
-            <div>
-              <p class="eyebrow">Scene preview</p>
-              <h2>Interactive 3D model</h2>
-            </div>
-            <div class="tag-row">
-              <span class="status-dot"></span>
-              <span>Live render</span>
-            </div>
-          </div>
-
-          <div id="viewer"></div>
-        </section>
-      </main>
+        </div>
+      </section>
     </div>
 
     <script type="module" src="./app.js"></script>
